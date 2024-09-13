@@ -3,11 +3,12 @@ name: Build and Push Multi-Architecture NGINX Image (Latest)
 on:
   push:
     branches:
-      - main  # Trigger on pushes to the main branch
+      - main
+  workflow_dispatch: {}
 
 permissions:
-  packages: write  # Grant write access to GitHub packages (GHCR)
-  contents: read   # Grant read access to repository contents
+  packages: write
+  contents: read
 
 jobs:
   build-and-push:
