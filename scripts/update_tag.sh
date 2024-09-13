@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -ex
 
 # Get the current Git tag
 GIT_TAG=$(git describe --tags --abbrev=0)
