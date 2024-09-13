@@ -1,0 +1,38 @@
+name: Build and Push NGINX Image
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Install Git (for fetching tags)
+      run: sudo apt-get install git
+
+    - name: Update HTML with Git Tag
+      run: ./scripts/update_tag.sh
+
+    - name: Log in to GitHub Container Registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Build Docker Image
+      run: |
+        TAG=$(git describe --tags --abbrev=0)
+        docker build -t ghcr.io/${{ github.repository_owner }}/nginx-test:$TAG .
+
+    - name: Push Docker Image to GHCR
+      run: |
+        TAG=$(git describe --tags --abbrev=0)
+        docker push ghcr.io/${{ github.repository_owner }}/nginx-test:$TAG
