@@ -1,11 +1,13 @@
-# .github/workflows/deploy.yml
-
 name: Build and Push NGINX Image (Latest)
 
 on:
   push:
     branches:
       - main  # Trigger on pushes to the main branch
+
+permissions:
+  packages: write  # Grant write access to GitHub packages (GHCR)
+  contents: read   # Grant read access to repository contents
 
 jobs:
   build-and-push:
