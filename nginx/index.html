@@ -10,6 +10,21 @@
 <body>
     <h1>Welcome to NGINX!</h1>
     <p>Commit hash: <strong>{{COMMIT_HASH}}</strong></p>
-    <p>Build time: <strong>{{BUILD_TIME}}</strong></p>
+    <p>Build time (UTC): <strong id="utc-time">{{BUILD_TIME}}</strong></p>
+    <p>Build time (Local Timezone): <strong id="local-time"></strong></p>
+
+    <script>
+        // Get the UTC build time from the page
+        var utcTime = document.getElementById('utc-time').innerText;
+
+        // Parse it as a JavaScript Date object
+        var utcDate = new Date(utcTime + " UTC");
+
+        // Convert it to local time string
+        var localTimeString = utcDate.toLocaleString();
+
+        // Update the page with the local time
+        document.getElementById('local-time').innerText = localTimeString;
+    </script>
 </body>
 </html>
