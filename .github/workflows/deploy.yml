@@ -1,3 +1,5 @@
+# .github/workflows/deploy.yml
+
 name: Build and Push NGINX Image
 
 on:
@@ -5,7 +7,7 @@ on:
     branches:
       - main
     tags:
-      - '*'
+      - '*'  # Trigger on tag push
 
 jobs:
   build-and-push:
@@ -29,10 +31,17 @@ jobs:
 
     - name: Build Docker Image
       run: |
+        # Convert the repository owner and tag to lowercase
+        REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
         TAG=$(git describe --tags --abbrev=0)
-        docker build -t ghcr.io/${{ github.repository_owner }}/nginx-test:$TAG .
+        
+        # Build the Docker image
+        docker build -t ghcr.io/$REPO_OWNER/nginx-test:$TAG .
 
     - name: Push Docker Image to GHCR
       run: |
+        REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
         TAG=$(git describe --tags --abbrev=0)
-        docker push ghcr.io/${{ github.repository_owner }}/nginx-test:$TAG
+
+        # Push the Docker image
+        docker push ghcr.io/$REPO_OWNER/nginx-test:$TAG
