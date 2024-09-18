@@ -40,8 +40,8 @@ jobs:
         # Convert the repository owner to lowercase
         REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
 
-        # Always use the "latest" tag
-        TAG=latest
-
         # Build and push the Docker image for both amd64 and arm64 platforms
+        docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/$REPO_OWNER/nginx-test:latest --push .
+
+        TAG=$(git describe --tags --abbrev=0)
         docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/$REPO_OWNER/nginx-test:$TAG --push .
