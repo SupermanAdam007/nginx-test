@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Exit immediately if any command fails
-set -ex
+set -e
 
 # Variables (can be passed in or set here)
 APP_NAME=test_tmp_tags_and_capacity_provider
@@ -10,8 +10,8 @@ TASK_TEMPLATE_FAMILY=${TASK_TEMPLATE_FAMILY:-"${APP_NAME}_template"}
 APP_TASK_FAMILY=${APP_TASK_FAMILY:-"${APP_NAME}"}
 CONTAINER_NAME=${CONTAINER_NAME:-"main"}
 IMAGE_REPOSITORY="ghcr.io/supermanadam007/nginx-test"
-IMAGE_TAG=v0.0.3
-APP_VERSION=v0.0.3
+IMAGE_TAG=v0.0.4
+APP_VERSION=v0.0.4
 CLUSTER_NAME=$APP_NAME
 SERVICE_NAME=$APP_NAME
 FORCE_DEPLOY=${FORCE_DEPLOY:-false}  # Option to manually trigger the ECS service update
@@ -82,6 +82,8 @@ echo "Task definition for ${APP_TASK_FAMILY} registered successfully with ARN: $
 
 
 # Manual step: Check if FORCE_DEPLOY is set to true and force an update
+echo ""
+
 if [[ "$FORCE_DEPLOY" == "true" ]]; then
   echo "Forcing ECS service deployment with the new task definition..."
   aws ecs update-service --cluster "$CLUSTER_NAME" --service "$SERVICE_NAME" --force-new-deployment --task-definition "$NEW_TASK_DEF_ARN" --output text
