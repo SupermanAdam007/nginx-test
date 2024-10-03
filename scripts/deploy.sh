@@ -4,14 +4,14 @@
 set -e
 
 # Variables (can be passed in or set here)
-APP_NAME=test_tmp_tags_and_capacity_provider
+APP_NAME=test_tmp_v2_tags_and_capacity_provider
 
 TASK_TEMPLATE_FAMILY=${TASK_TEMPLATE_FAMILY:-"${APP_NAME}_template"}
 APP_TASK_FAMILY=${APP_TASK_FAMILY:-"${APP_NAME}"}
 CONTAINER_NAME=${CONTAINER_NAME:-"main"}
 IMAGE_REPOSITORY="ghcr.io/supermanadam007/nginx-test"
-IMAGE_TAG=v0.0.4
-APP_VERSION=v0.0.4
+IMAGE_TAG=v0.0.5
+APP_VERSION=v0.0.5
 CLUSTER_NAME=$APP_NAME
 SERVICE_NAME=$APP_NAME
 FORCE_DEPLOY=${FORCE_DEPLOY:-false}  # Option to manually trigger the ECS service update
