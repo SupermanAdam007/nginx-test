@@ -29,3 +29,4 @@ docker run -d -p 80:80 ghcr.io/<your-username>/nginx-test:latest
 ```
 
 Visit `http://localhost` in your browser to see the NGINX welcome page with the latest commit hash and build time.
+aejfnaljkfmnd
